@@ -2,149 +2,391 @@ import { useState } from "react"
 import Layout from "../components/Layout"
 
 const healingCategories = {
-  bullying: {
-    title: "🛡️ Pemulihan dari Bullying",
-    description: "Panduan langkah demi langkah untuk pulih dari trauma bullying",
+  anxiety: {
+    title: "😰 Mengatasi Kecemasan & Panik",
+    description: "Evidence-based strategies untuk mengelola anxiety disorder dan panic attacks",
     steps: [
       {
-        title: "Akui Rasa Sakitmu",
-        description: "Jangan menekan atau menyangkal perasaanmu. Rasa sakit adalah nyata dan valid.",
+        title: "Pahami Neurobiologi Kecemasan",
+        description: "Kecemasan adalah respons fight-or-flight yang natural tapi over-activated.",
         tips: [
-          "Izinkan diri Anda untuk merasa sedih, marah, atau takut",
-          "Jangan beri tahu diri Anda bahwa Anda seharusnya merasa lebih baik",
-          "Validasi pengalaman Anda sendiri",
+          "Amygdala (alarm bell otak) bereaksi terhadap ancaman - real atau perceived",
+          "Tubuh melepaskan cortisol & adrenaline - ini FISIK, bukan mental weakness",
+          "Hyperventilation = CO2 drop = dizziness, numbness (bukan serangan jantung)",
         ]
       },
       {
-        title: "Jangan Menyalahkan Diri Sendiri",
-        description: "Bullying BUKAN kesalahan Anda. Tanggung jawab ada pada pelaku, bukan Anda.",
+        title: "Teknik Breathing & Grounding Instant",
+        description: "Immediate techniques untuk meredakan panic attack dalam 5-15 menit.",
         tips: [
-          "Ingat: tidak ada yang Anda lakukan yang membuat Anda 'layak' untuk dibully",
-          "Pelaku memilih untuk berperilaku seperti itu",
-          "Kehadiran Anda bernilai apa adanya",
+          "Box Breathing: Tarik 4 detik, tahan 4, hembuskan 4, tahan 4 (repeat 5-10x)",
+          "5-4-3-2-1 Grounding: Catat 5 lihat, 4 dengar, 3 sentuh, 2 cium, 1 rasa",
+          "Progressive Muscle Relaxation: Tegang & relaks setiap grup otot 5 detik",
         ]
       },
       {
-        title: "Cari Dukungan",
-        description: "Ceritakan pada orang yang Anda percaya - keluarga, teman, atau profesional.",
+        title: "Cognitive Reframing",
+        description: "Mengidentifikasi dan mengubah anxious thought patterns.",
         tips: [
-          "Berbicara mengurangi beban yang Anda bawa sendirian",
-          "Orang yang peduli ingin membantu Anda",
-          "Profesional terlatih bisa memberikan perspektif berharga",
+          "Catastrophizing: 'Ini serangan jantung!' → 'Ini panic attack, akan hilang'",
+          "Mind Reading: 'Semua jalan lihat saya' → 'Pikiran saya, bukan fakta'",
+          "Uji pikiran: Apa BUKTI yang support/melawan thought ini? (Socratic questioning)",
         ]
       },
       {
-        title: "Bangun Batasan Sehat",
-        description: "Lindungi diri Anda dengan menetapkan batasan yang jelas.",
+        title: "Exposure Therapy (Gradual)",
+        description: "Habiskan fear melalui repeated, safe exposure (key untuk anxiety)",
         tips: [
-          "Berani mengatakan 'tidak' adalah bentuk keberanian",
-          "Hindari situasi atau orang yang membuat Anda tidak aman",
-          "Prioritaskan hubungan yang saling menghormati",
+          "Buat feared situations hierarchy: mild anxiety → moderate → severe",
+          "Stay dalam situasi 15-30 menit - anxiety AKAN menurun (habituation)",
+          "Repeat 3-4x per minggu untuk solidify new learning di brain",
         ]
       },
       {
-        title: "Jaga Kesehatan Fisik",
-        description: "Tubuh dan pikiran terhubung. Perawatan fisik membantu pemulihan mental.",
+        title: "Lifestyle Modifications",
+        description: "Faktor gaya hidup yang significantly impact anxiety levels.",
         tips: [
-          "Tidur cukup 7-9 jam per malam",
-          "Makan makanan bergizi",
-          "Olahraga ringan seperti jalan atau yoga",
+          "Kurangi: Caffeine (trigger anxiety), Alcohol (disrupts sleep & increases anxiety)",
+          "Tingkatkan: Cardio 30 min 3x/minggu (reduces anxiety 30%), sleep 7-9 jam",
+          "Limit news/social media - doomscrolling increases anxiety dramatically",
         ]
       },
       {
-        title: "Temukan Hal yang Membawa Kebahagiaan",
-        description: "Kembangkan hobi dan aktivitas yang membuat Anda merasa baik.",
+        title: "When Professional Help Needed",
+        description: "Signs untuk consult dengan psychologist atau psychiatrist.",
         tips: [
-          "Musik, seni, olahraga, atau membaca",
-          "Habiskan waktu di alam",
-          "Berinteraksi dengan orang-orang yang positif",
+          "Anxiety mengganggu daily functioning > 2 minggu, atau panic attacks berulang",
+          "Sudah menghindari banyak situasi (avoidance memperkuat anxiety cycle)",
+          "Therapy pilihan: CBT (70% effective), EMDR, ACT, atau medication + therapy",
         ]
       },
     ]
   },
-  family: {
-    title: "👨‍👩‍👧 Pemulihan dari Trauma Keluarga",
-    description: "Panduan untuk menyembuhkan luka keluarga dan membangun hubungan yang sehat",
+  depression: {
+    title: "😢 Mengatasi Depresi & Kehilangan Motivasi",
+    description: "Comprehensive guide untuk pemulihan dari depression dan dark thoughts",
     steps: [
       {
-        title: "Pahami Trauma Anda",
-        description: "Identifikasi bagaimana pengalaman keluarga Anda mempengaruhi Anda hari ini.",
+        title: "Pahami Depression Sebagai Penyakit, Bukan Kelemahan",
+        description: "Depression melibatkan imbalance neurotransmitter - ini medical, bukan personal failure.",
         tips: [
-          "Refleksikan pola perilaku yang muncul dari masa lalu",
-          "Cari tahu perasaan apa yang dipicu oleh situasi tertentu",
-          "Tulis pengalaman Anda untuk memahami lebih baik",
+          "Serotonin (mood), Dopamine (motivation), Norepinephrine (energy) = LOW in depression",
+          "Brain mengalami inflammation & reduced neuroplasticity - ini treatable condition",
+          "5% populasi dunia punya depression - tidak ada shame/stigma",
         ]
       },
       {
-        title: "Validasi Perasaan Anda",
-        description: "Apa yang Anda rasakan adalah sah, bahkan jika keluarga mengatakan sebaliknya.",
+        title: "Behavioral Activation - Mulai Kecil",
+        description: "Action sebelum motivation - doing things WILL improve mood, bukan sebaliknya.",
         tips: [
-          "Marah, sedih, dan kecewa adalah reaksi normal terhadap trauma",
-          "Anda tidak perlu memaafkan untuk melanjutkan hidup",
-          "Emosi Anda adalah bukti bahwa Anda peduli",
+          "Day 1-3: Mini tasks - mandi, makan, berjalan 10 menit (jangan expect big changes)",
+          "Week 1-2: Add satu activity yang enjoyable (musik, game, scroll favorit app)",
+          "Week 2+: Gradually tambah exercise, social time, purposeful activity",
         ]
       },
       {
-        title: "Menetapkan Batasan",
-        description: "Tentukan apa yang bisa Anda terima dan tolak dalam hubungan keluarga.",
+        title: "Combat Negative Thought Spiral",
+        description: "Depression distorts thinking - identify dan challenge cognitive distortions.",
         tips: [
-          "Anda berhak atas privasi dan ruang pribadi",
-          "Tidak apa-apa untuk mengurangi kontak jika diperlukan",
-          "Batasan adalah bentuk cinta terhadap diri sendiri",
+          "Thought: 'Saya worthless, tidak ada harapan' → Bukti? (Usually none)",
+          "Depression = liar - it tells lies tentang diri Anda dan masa depan",
+          "Tercatat 3 kali Anda salah dengan prediksi negatif Anda? Show brain error rate",
         ]
       },
       {
-        title: "Curhat dengan Profesional",
-        description: "Terapis atau konselor dapat membantu Anda memproses trauma dengan aman.",
+        title: "Establish Rigid Daily Structure",
+        description: "Depression loves chaos - struktur membantu prevent depressive spiraling.",
         tips: [
-          "Terapi dapat membantu Anda memahami pola keluarga",
-          "Profesional memberikan perspektif netral dan non-judgmental",
-          "Ada berbagai jenis terapi yang bisa disesuaikan dengan kebutuhan Anda",
+          "Set: Wake time (7am), meal times, bedtime (consistency regulates mood & sleep)",
+          "Schedule 30min meaningful activity daily (exercise, hobby, socializing, creative)",
+          "Sunlight exposure 15-20 min (vitamin D, circadian rhythm regulation = crucial)",
         ]
       },
       {
-        title: "Temukan 'Keluarga Pilihan'",
-        description: "Kembangkan hubungan supportif dengan orang-orang yang memilih Anda.",
+        title: "Social Connection Despite Not Wanting",
+        description: "Isolation amplifies depression - stay connected even when difficult.",
         tips: [
-          "Teman dekat dapat menjadi keluarga yang Anda butuhkan",
-          "Cari komunitas dengan nilai-nilai yang sama",
-          "Hubungan yang sehat adalah kemungkinan bagi Anda",
+          "Kontrak: Text 1 orang daily, call 1x/minggu (start small - 5 min call ok)",
+          "Jika sulit keluar rumah: Video call, online games, support group communities",
+          "Tell someone Anda struggling - vulnerability creates connection yang healing",
         ]
       },
       {
-        title: "Investasi dalam Diri Sendiri",
-        description: "Pindahkan energi menuju pertumbuhan pribadi dan kebahagiaan.",
+        title: "Medical Options: Therapy & Medication",
+        description: "Moderate-severe depression needs professional treatment, bukan willpower.",
         tips: [
-          "Pelajari hal-hal baru yang membuat Anda tertarik",
-          "Kembangkan keterampilan dan hobi Anda",
-          "Hargai pencapaian Anda, sekecil apa pun",
+          "Therapy alone: 40-50% effective | Medication alone: 50-60% | Both: 70-80%",
+          "SSRIs/SNRIs adalah safe & effective (not addictive, not weakness)",
+          "Takes 4-6 weeks untuk see medication effects - patience necessary",
         ]
       },
     ]
-  }
+  },
+  selfharm: {
+    title: "🩹 Healing from Self-Harm & Suicidal Thoughts",
+    description: "Support untuk berhenti dari self-injury dan manage dark thoughts safely",
+    steps: [
+      {
+        title: "Understand Why You Self-Harm",
+        description: "Self-harm isn't attempt to die - it's attempt to cope dengan emotional pain.",
+        tips: [
+          "Functions: emotion regulation, self-punishment, sensation-seeking, cry for help",
+          "Understanding function = dapat develop healthy alternatives dengan efek sama",
+          "'Urge' timbul = emotional flooding → use distress tolerance skills → emotion subsides",
+        ]
+      },
+      {
+        title: "Develop Healthy Alternatives (Per Function)",
+        description: "Replace self-harm dengan behavior yg give similar relief.",
+        tips: [
+          "Sensation-seeking: Ice cube di skin, cold shower, exercise intensif, ping pong ball",
+          "Anger/Tension release: Pillow punch, scream di alam, intense workout, rip kertas",
+          "Emotion regulation: Music, cry, art, journaling (no judgment), social contact",
+        ]
+      },
+      {
+        title: "DBT Skills for Distress Tolerance",
+        description: "Evidence-based skills untuk survive intense emotions tanpa self-harm.",
+        tips: [
+          "TIPP: Temperature (ice), Intense exercise, Paced breathing, Progressive relax",
+          "DISTRACT: D= Different activity, I= Intense sensations, S= Soothing, T= Think, R= Relax, A= Activities",
+          "SELF-SOOTHE: Use 5 senses (music, comfort item, pleasant visuals, soft textures)",
+        ]
+      },
+      {
+        title: "Safety Planning",
+        description: "Concrete plan untuk ketika urge self-harm datang.",
+        tips: [
+          "Write: Warning signs (mood shift, body tension), coping strategies yang bantu",
+          "List orang yg bisa contact + crisis hotline on speed dial",
+          "Remove access ke harmful items; replace dgn safe alternatives di reach",
+        ]
+      },
+      {
+        title: "Professional Treatment",
+        description: "DBT & trauma therapy paling effective untuk self-harm recovery.",
+        tips: [
+          "DBT = 70%+ success untuk self-harm reduction (combines therapy + skills coaching)",
+          "Trauma-focused CBT jika self-harm linked ke specific trauma",
+          "Medication (anti-anxiety, antidepressant) helps reduce urges & emotional pain",
+        ]
+      },
+      {
+        title: "🚨 SUICIDAL THOUGHTS = EMERGENCY",
+        description: "Jika ada plan atau serious intent untuk bunuh diri - CALL NOW.",
+        tips: [
+          "Hubungi 119 (Indonesia), text 741741 (USA Crisis Text Line), atau go ke ER",
+          "Tell trusted person immediately - jangan alone dengan pikiran ini",
+          "Suicidal thoughts = treatable symptom dari depression - bukan permanent reality",
+        ]
+      },
+    ]
+  },
+  bullying: {
+    title: "🛡️ Pemulihan dari Bullying & Trauma Sosial",
+    description: "Langkah pemulihan dari bullying dan membangun ulang self-esteem",
+    steps: [
+      {
+        title: "Validasi bahwa Bullying = Real Harm",
+        description: "Psychological harm dari bullying sama real dengan physical injury.",
+        tips: [
+          "Bullying causes lasting brain changes (amygdala hyperactive, prefrontal underactive)",
+          "PTSD, anxiety, depression, social phobia dari bullying adalah valid medical conditions",
+          "Jangan minimize dengan 'just words' atau 'kids being kids' - normalize talking about impact",
+        ]
+      },
+      {
+        title: "Jangan Blame Yourself - Responsibility Lies With Bully",
+        description: "Nothing about you 'deserved' bullying atau 'caused' it.",
+        tips: [
+          "Bullies target difference (real atau perceived) as weakness point - bukan karena Anda salah",
+          "Bullies sendiri sering punya insecurity/trauma - bukan excuse, pero understanding",
+          "Your worth tidak diminish oleh bullying - Anda tetap whole person",
+        ]
+      },
+      {
+        title: "Seek Support - Break Isolation",
+        description: "Ceritakan orang terpercaya - keheningan memperkuat trauma.",
+        tips: [
+          "Tell parent, teacher, counselor, atau trusted friend - builds safety",
+          "Online communities untuk bullying survivors provides validation & shared strategies",
+          "Therapy crucial untuk processing trauma safely dengan professional",
+        ]
+      },
+      {
+        title: "Set Boundaries & Create Safety",
+        description: "Lindungi diri Anda dengan firm boundaries & avoidance dari bully.",
+        tips: [
+          "Physical: Avoid places dimana bully hangout; walk dengan teman; tell adults patrols needed",
+          "Digital: Block si bully di social media; jangan respond to provocations (feeds them)",
+          "Emotional: Remember their words reflect their insecurity, bukan truth tentang Anda",
+        ]
+      },
+      {
+        title: "Rebuild Self-Esteem & Identity",
+        description: "Bullying damages self-image - actively rebuild confidence.",
+        tips: [
+          "Reconnect dengan hobi/interests yang enjoyable (bully didn't define these)",
+          "Seek peer groups dengan shared values/interests - build supportive community",
+          "Document positives: List strengths, accomplishments, positive feedback dari others",
+        ]
+      },
+      {
+        title: "Long-Term Healing",
+        description: "Trauma dari bullying requires ongoing processing.",
+        tips: [
+          "Therapy (trauma-focused CBT, EMDR) for deep processing of bullying memories",
+          "Practice self-compassion - treat yourself dengan kindness you'd give hurt friend",
+          "Remember: Bullying scar bisa fade, Anda lebih kuat dari trauma ini",
+        ]
+      },
+    ]
+  },
+  trauma: {
+    title: "💔 Healing Trauma Keluarga & Abuse",
+    description: "Comprehensive recovery pathway dari family trauma dan neglect/abuse",
+    steps: [
+      {
+        title: "Identify & Name Your Trauma",
+        description: "Clarity tentang apa yang terjadi adalah langkah first untuk healing.",
+        tips: [
+          "Types: Emotional abuse (criticism, gaslighting), physical abuse, neglect (unmet needs), enmeshment",
+          "Document patterns yang Anda notice - bagaimana trauma affects relationships/self-image sekarang",
+          "Journal tentang specific memories untuk process & understand impact",
+        ]
+      },
+      {
+        title: "Validate Yourself Even If Family Doesn't",
+        description: "Your feelings are real dan valid - jangan tunggu family validation.",
+        tips: [
+          "Family mungkin deny/minimize trauma - doesn't mean it didn't happen atau wasn't harmful",
+          "Anger, sadness, fear = normal reaction terhadap abuse/neglect",
+          "Anda berhak untuk feel hurt bahkan jika Anda 'love' family members",
+        ]
+      },
+      {
+        title: "Set Boundaries (Modified or No Contact)",
+        description: "Proteksi diri Anda dengan firm limits on family interaction.",
+        tips: [
+          "Low contact: Limited communication, structured visits, emotional distance",
+          "No contact: Complete cessation of communication (sometimes necessary untuk healing)",
+          "Boundaries = self-love, bukan rejection atau 'bad' kid behavior",
+        ]
+      },
+      {
+        title: "Therapy - Process Dengan Professional",
+        description: "Family trauma runs deep - professional support accelerates healing.",
+        tips: [
+          "CPT (Cognitive Processing Therapy) untuk trauma processing",
+          "EMDR highly effective untuk trauma memories & stuck emotions",
+          "Attachment-focused therapy untuk repair dari broken family bonds",
+        ]
+      },
+      {
+        title: "Build 'Family of Choice'",
+        description: "Create supportive chosen family untuk fulfill unmet emotional needs.",
+        tips: [
+          "Close friends dapat provide unconditional support family didn't",
+          "Mentor/role model figures dapat fill parental void",
+          "Healthy relationships ARE possible untuk trauma survivors",
+        ]
+      },
+      {
+        title: "Re-Parent Yourself",
+        description: "Provide yourself dengan compassion, safety, unconditional support.",
+        tips: [
+          "Self-soothing: Comfort items, self-affirmation, gentle self-talk",
+          "Meet your own needs: Advocate untuk yourself dalam relationships",
+          "Celebrate self: Recognize achievements, self-worth independent ng family opinion",
+        ]
+      },
+    ]
+  },
+  relationships: {
+    title: "💕 Building Healthy Relationships Post-Trauma",
+    description: "Develop secure attachment dan navigate relationships setelah trauma",
+    steps: [
+      {
+        title: "Understand Your Attachment Style",
+        description: "Family of origin shapes how you attach - awareness is first step.",
+        tips: [
+          "Secure: Comfortable dgn intimacy & independence (HEALTHY TARGET)",
+          "Anxious: Fear abandonment, need reassurance, hypervigilant untuk rejection",
+          "Avoidant: Uncomfortable dgn closeness, value independence extremely, dismiss feelings",
+          "Disorganized: Mix anxious + avoidant (common sa trauma survivors)",
+        ]
+      },
+      {
+        title: "Recognize Red Flags vs. Green Flags",
+        description: "Learn to identify healthy vs. toxic partner/relationship early.",
+        tips: [
+          "RED FLAGS: Controlling, manipulative, love-bombing, gaslighting, isolating, anger outbursts",
+          "GREEN FLAGS: Respects boundaries, honest communication, takes accountability, supportive",
+          "Trust your gut - if something feels off, it probably is",
+        ]
+      },
+      {
+        title: "Develop Assertive Communication",
+        description: "Express needs & feelings clearly tanpa aggression atau passivity.",
+        tips: [
+          "'I' statements: 'I feel hurt ketika...' bukan 'You always...'",
+          "State needs without demands: 'Aku butuh quality time' bukan 'Anda must...'",
+          "Practice saying 'no' - it's ok to prioritize your needs",
+        ]
+      },
+      {
+        title: "Heal Dalam vs. Leave Relationship",
+        description: "Determine apakah relationship bisa repair atau needs to end.",
+        tips: [
+          "Couples therapy effective jika kedua partner willing untuk work pada issues",
+          "Some relationships toxic & better ended - prioritize your mental health",
+          "Leaving tidak selalu 'failure' - sometimes self-preservation",
+        ]
+      },
+      {
+        title: "Develop Interdependence",
+        description: "Balance antara independence & vulnerability dalam partnership.",
+        tips: [
+          "Maintain own identity: Friends, hobbies, goals, finances independent",
+          "Partner = support system, bukan entire source ng happiness",
+          "Both people grow sambil maintaining individual autonomy",
+        ]
+      },
+      {
+        title: "Self-Love as Foundation",
+        description: "Cultivate strong relationship dgn diri sendiri SEBELUM ngf partner.",
+        tips: [
+          "Healing time alone adalah investment sa future healthy relationships",
+          "Don't look untuk 'savior' dalam romantic partners - set unrealistic expectations",
+          "Two whole people together = healthier relationship ng two broken pieces",
+        ]
+      },
+    ]
+  },
 }
 
 export default function Healing() {
-  const [selectedCategory, setSelectedCategory] = useState("bullying")
+  const [selectedCategory, setSelectedCategory] = useState("anxiety")
   const [expandedStep, setExpandedStep] = useState(0)
 
   const category = healingCategories[selectedCategory]
 
   return (
     <Layout>
-      <div className="p-10 space-y-8 max-w-6xl mx-auto">
+      <div className="p-10 space-y-8 max-w-7xl mx-auto">
         {/* HEADER */}
         <div className="mb-10">
-          <h1 className="text-4xl font-bold text-slate-800 mb-2">
-            🌱 Langkah-Langkah Menuju Pemulihan
+          <h1 className="text-5xl font-bold bg-gradient-to-r from-green-600 to-teal-600 bg-clip-text text-transparent mb-4">
+            🌱 Program Pemulihan Holistik
           </h1>
-          <p className="text-slate-500 text-lg">
-            Pemulihan adalah proses, bukan destinasi. Ambil langkah kecil setiap hari.
+          <p className="text-slate-600 text-lg">
+            Panduan komprehensif untuk pemulihan dari berbagai jenis trauma dan mental health challenges. 
+            Setiap kategori menawarkan strategi evidence-based yang terbukti efektif.
           </p>
         </div>
 
         {/* CATEGORY SELECTOR */}
-        <div className="flex gap-4 flex-wrap">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {Object.entries(healingCategories).map(([key, value]) => (
             <button
               key={key}
@@ -152,15 +394,22 @@ export default function Healing() {
                 setSelectedCategory(key)
                 setExpandedStep(0)
               }}
-              className={`px-8 py-4 rounded-xl font-semibold transition duration-300 ${
+              className={`p-4 rounded-2xl font-semibold transition duration-300 text-left ${
                 selectedCategory === key
-                  ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg scale-105"
-                  : "bg-white text-slate-800 border-2 border-slate-200 hover:border-blue-400"
+                  ? "bg-gradient-to-br from-green-500 to-teal-500 text-white shadow-xl scale-105"
+                  : "bg-white text-slate-800 border-2 border-slate-200 hover:border-green-400 hover:shadow-lg"
               }`}
             >
-              {value.title}
+              <div className="text-xl mb-2">{value.title.split(" ")[0]}</div>
+              <div className="text-sm font-medium">{value.title.split(" ").slice(1).join(" ")}</div>
             </button>
           ))}
+        </div>
+
+        {/* CATEGORY DESCRIPTION */}
+        <div className="bg-gradient-to-r from-green-50 to-teal-50 rounded-2xl p-6 border-2 border-green-200">
+          <h2 className="text-2xl font-bold text-green-900 mb-2">{category.title}</h2>
+          <p className="text-green-800">{category.description}</p>
         </div>
 
         {/* STEPS */}
@@ -176,42 +425,48 @@ export default function Healing() {
           ))}
         </div>
 
-        {/* ADDITIONAL RESOURCES */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <ResourceSection
-            title="🧘 Teknik Mindfulness"
-            items={[
-              "Deep Breathing: Tarik napas dalam selama 4 detik, tahan 4 detik, keluarkan 4 detik",
-              "Body Scan: Fokus pada setiap bagian tubuh, dari kepala hingga kaki",
-              "5-4-3-2-1: Identifikasi 5 hal yang Anda lihat, 4 yang Anda dengar, dst",
-              "Meditasi Berjalan: Berjalan perlahan sambil fokus pada setiap langkah",
-            ]}
-          />
-          <ResourceSection
-            title="📝 Jurnal Prompts"
-            items={[
-              "Hari ini saya merasa... karena...",
-              "Satu hal yang saya hargai tentang diri saya adalah...",
-              "Ketika saya merasa sedih, saya bisa...",
-              "Orang yang saya percayai adalah... karena...",
-            ]}
-          />
+        {/* RESOURCES */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-12">
+          <div className="bg-white rounded-2xl shadow-lg p-6 border-l-4 border-blue-500">
+            <h3 className="text-xl font-bold text-slate-800 mb-4">🧘 Teknik Mindfulness & Grounding</h3>
+            <ul className="space-y-3 text-slate-700">
+              <li><strong>✓ Box Breathing:</strong> 4-4-4-4 counting untuk calm nervous system instantly</li>
+              <li><strong>✓ 5-4-3-2-1 Grounding:</strong> Engage semua 5 senses untuk present moment</li>
+              <li><strong>✓ Body Scan:</strong> Scan sensations tanpa judgment atau change</li>
+              <li><strong>✓ Loving-Kindness Meditation:</strong> Cultivate compassion untuk self & others</li>
+            </ul>
+          </div>
+          <div className="bg-white rounded-2xl shadow-lg p-6 border-l-4 border-purple-500">
+            <h3 className="text-xl font-bold text-slate-800 mb-4">📝 Journaling & Self-Reflection</h3>
+            <ul className="space-y-3 text-slate-700">
+              <li><strong>✓ Timeline Mapping:</strong> Document trauma chronologically untuk understand patterns</li>
+              <li><strong>✓ Daily Check-in:</strong> Note emotions & triggers daily untuk self-awareness</li>
+              <li><strong>✓ Gratitude Practice:</strong> 3 things grateful setiap hari (rewires brain ke positive)</li>
+              <li><strong>✓ Letter Writing:</strong> Write unsent letters untuk express & process emotions safely</li>
+            </ul>
+          </div>
         </div>
 
         {/* DAILY AFFIRMATIONS */}
         <div className="bg-gradient-to-br from-purple-100 to-pink-100 rounded-2xl p-8 border-2 border-purple-300">
-          <h2 className="text-2xl font-bold text-purple-900 mb-6">💪 Afirmasi Harian</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <h2 className="text-2xl font-bold text-purple-900 mb-6">💪 Affirmations untuk Healing Journey</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {[
-              "Saya layak mendapatkan kebahagiaan dan kedamaian pikiran.",
-              "Masa lalu saya tidak mendefinisikan masa depan saya.",
-              "Saya memiliki kekuatan untuk memilih cara saya merespons.",
-              "Saya terus tumbuh dan menjadi lebih kuat setiap hari.",
-              "Harga diri saya tidak tergantung pada pendapat orang lain.",
-              "Saya berhak atas hubungan yang sehat dan suportif.",
+              "Saya layak mendapatkan kebahagiaan, kedamaian, dan cinta tanpa syarat.",
+              "Masa lalu saya tidak mendefinisikan masa depan saya - saya berdaya untuk berubah.",
+              "Saya memiliki kekuatan untuk memilih cara merespons dan recovery saya.",
+              "Setiap hari saya tumbuh lebih kuat dan lebih wise dari pengalaman saya.",
+              "Harga diri saya tidak tergantung pada pendapat orang lain - saya self-determined.",
+              "Saya berhak atas hubungan yang sehat, respektuoso, dan reciprocal.",
+              "Trauma saya tidak mendefinisikan saya - resilience dan kekuatan saya adalah center saya.",
+              "Saya berdaya untuk menulis ulang narrative hidup saya mulai sekarang.",
+              "Healing adalah proses, bukan destinasi - saya patient dan kind dengan diri sendiri.",
+              "Saya layak untuk healing, untuk peace, untuk semua hal baik dalam kehidupan.",
+              "Saya memilih diri saya sendiri dan prioritas keselamatan mental saya - dan itu OK.",
+              "Setiap step kecil menuju healing adalah victory yang valuable dan patut dirayakan.",
             ].map((affirmation, idx) => (
-              <div key={idx} className="bg-white rounded-xl p-4 border-l-4 border-purple-500">
-                <p className="text-purple-900 font-medium">{affirmation}</p>
+              <div key={idx} className="bg-white rounded-xl p-4 border-l-4 border-purple-500 shadow-md hover:shadow-lg transition">
+                <p className="text-purple-900 font-medium text-sm">{affirmation}</p>
               </div>
             ))}
           </div>
@@ -219,16 +474,18 @@ export default function Healing() {
 
         {/* CRISIS SUPPORT */}
         <div className="bg-red-50 rounded-2xl p-8 border-2 border-red-300">
-          <h2 className="text-2xl font-bold text-red-900 mb-4">🆘 Dalam Krisis?</h2>
-          <p className="text-red-800 mb-4">Jika Anda memiliki pikiran untuk menyakiti diri sendiri, hubungi segera:</p>
+          <h2 className="text-2xl font-bold text-red-900 mb-4">🆘 Dalam Krisis atau Butuh Bantuan Sekarang</h2>
+          <p className="text-red-800 mb-6 text-lg">Jika ada pikiran untuk menyakiti diri sendiri atau bunuh diri, hubungi SEKARANG juga:</p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="bg-white p-4 rounded-lg border-2 border-red-400">
-              <p className="font-bold text-red-900">Hotline Krisis 24/7</p>
-              <p className="text-red-800 text-lg font-bold mt-2">📞 119 (Indonesia)</p>
+            <div className="bg-white p-6 rounded-lg border-2 border-red-400">
+              <p className="font-bold text-red-900 text-lg">Hotline Krisis 24/7</p>
+              <p className="text-red-800 text-2xl font-bold mt-3">📞 119</p>
+              <p className="text-sm text-red-700 mt-2">Hubungi kapan saja, tersedia 24 jam untuk support darurat</p>
             </div>
-            <div className="bg-white p-4 rounded-lg border-2 border-red-400">
-              <p className="font-bold text-red-900">Pertolongan Darurat</p>
-              <p className="text-red-800 text-lg font-bold mt-2">🏥 Rumah Sakit Terdekat</p>
+            <div className="bg-white p-6 rounded-lg border-2 border-red-400">
+              <p className="font-bold text-red-900 text-lg">Emergency Room</p>
+              <p className="text-red-800 text-2xl font-bold mt-3">🏥 Rumah Sakit Terdekat</p>
+              <p className="text-sm text-red-700 mt-2">Datang langsung jika immediate danger atau urgent support needed</p>
             </div>
           </div>
         </div>
@@ -241,16 +498,16 @@ function StepCard({ step, index, isExpanded, onClick }) {
   return (
     <div
       onClick={onClick}
-      className="bg-white rounded-2xl shadow-lg p-6 border-l-4 border-blue-500 cursor-pointer hover:shadow-xl transition"
+      className="bg-white rounded-2xl shadow-lg p-6 border-l-4 border-green-500 cursor-pointer hover:shadow-xl transition"
     >
       <div className="flex justify-between items-center">
-        <div>
+        <div className="flex-1">
           <h3 className="text-xl font-bold text-slate-800 mb-2">
-            Langkah {index + 1}: {step.title}
+            Step {index + 1}: {step.title}
           </h3>
-          <p className="text-slate-600">{step.description}</p>
+          <p className="text-slate-600 text-sm">{step.description}</p>
         </div>
-        <div className="text-3xl">
+        <div className="text-3xl text-green-600 ml-4 flex-shrink-0">
           {isExpanded ? "▼" : "▶"}
         </div>
       </div>
@@ -258,29 +515,13 @@ function StepCard({ step, index, isExpanded, onClick }) {
       {isExpanded && (
         <div className="mt-6 pt-6 border-t-2 border-slate-200 space-y-3">
           {step.tips.map((tip, idx) => (
-            <div key={idx} className="flex items-start gap-3 p-3 bg-blue-50 rounded-lg">
-              <span className="text-blue-600 font-bold flex-shrink-0">✓</span>
-              <p className="text-slate-700">{tip}</p>
+            <div key={idx} className="flex items-start gap-3 p-3 bg-green-50 rounded-lg">
+              <span className="text-green-600 font-bold flex-shrink-0 text-lg">✓</span>
+              <p className="text-slate-700 text-sm">{tip}</p>
             </div>
           ))}
         </div>
       )}
-    </div>
-  )
-}
-
-function ResourceSection({ title, items }) {
-  return (
-    <div className="bg-white rounded-2xl shadow-lg p-6 border-2 border-blue-200">
-      <h3 className="text-xl font-bold text-slate-800 mb-4">{title}</h3>
-      <div className="space-y-3">
-        {items.map((item, idx) => (
-          <div key={idx} className="flex items-start gap-3 p-3 bg-blue-50 rounded-lg">
-            <span className="text-blue-600 flex-shrink-0 font-bold">•</span>
-            <p className="text-slate-700 text-sm">{item}</p>
-          </div>
-        ))}
-      </div>
     </div>
   )
 }
