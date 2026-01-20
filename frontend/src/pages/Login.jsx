@@ -77,6 +77,13 @@ export default function Login() {
           </div>
         )}
 
+        {/* DEMO CREDENTIALS INFO */}
+        <div className="bg-blue-50 border-2 border-blue-300 p-4 rounded-xl mb-6">
+          <p className="text-xs font-semibold text-blue-900 mb-2">📋 Demo Credentials:</p>
+          <p className="text-xs text-blue-800 mb-1"><strong>User:</strong> user@example.com / user123</p>
+          <p className="text-xs text-blue-800"><strong>Admin:</strong> admin@example.com / admin123</p>
+        </div>
+
         <form onSubmit={handleLogin} className="space-y-6">
           <div>
             <label className="block text-sm font-semibold text-slate-700 mb-2">
@@ -108,7 +115,7 @@ export default function Login() {
             type="submit"
             className="w-full text-white py-3 rounded-xl font-semibold transition shadow-lg bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
           >
-            ➤ Masuk sebagai {role === "admin" ? "Admin" : "User"}
+            ➤ Masuk
           </button>
         </form>
 
