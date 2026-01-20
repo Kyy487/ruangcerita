@@ -20,7 +20,7 @@ export default function AdminDashboard() {
       {/* SIDEBAR */}
       <div className="w-64 bg-gradient-to-b from-purple-700 to-pink-700 text-white shadow-xl flex flex-col">
         <div className="p-6 border-b border-white/20">
-          <h2 className="text-2xl font-bold">🔑 RuangPulih</h2>
+          <h2 className="text-2xl font-bold">🔑 Ruang Cerita</h2>
           <p className="text-sm text-purple-100 mt-1">Admin Panel</p>
         </div>
 
@@ -176,7 +176,7 @@ export default function AdminDashboard() {
                   <div className="text-4xl">📢</div>
                   <div>
                     <h3 className="text-2xl font-bold">Selamat Datang Admin!</h3>
-                    <p className="text-purple-100">Anda memiliki akses penuh untuk mengelola sistem RuangPulih</p>
+                    <p className="text-purple-100">Anda memiliki akses penuh untuk mengelola sistem Ruang Cerita</p>
                   </div>
                 </div>
                 <div className="bg-white/20 border border-white/30 rounded-xl p-4 mt-4">

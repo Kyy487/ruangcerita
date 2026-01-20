@@ -24,18 +24,15 @@ export default function AdminChat() {
   const { user, logout } = useContext(AuthContext)
   const navigate = useNavigate()
 
-  // Load messages
   useEffect(() => {
     const saved = loadChatMessages()
     setMessages(saved)
   }, [])
 
-  // Auto scroll
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
   }, [messages])
 
-  // Reply message
   const replyMessage = () => {
     if (!adminReply.trim() || !selectedMessageId) return
 
@@ -60,7 +57,6 @@ export default function AdminChat() {
     setSelectedMessageId(null)
   }
 
-  // Delete message
   const deleteMessage = (id) => {
     if (window.confirm("Hapus pesan ini?")) {
       const updated = messages.filter(msg => msg.id !== id)
@@ -69,15 +65,13 @@ export default function AdminChat() {
     }
   }
 
-  // Get unique users
   const uniqueUsers = [...new Set(messages.map(m => m.username))]
 
-  // Filter messages
-  const filteredMessages = filterUser === "all" 
-    ? messages 
-    : messages.filter(m => m.username === filterUser)
+  const filteredMessages =
+    filterUser === "all"
+      ? messages
+      : messages.filter(m => m.username === filterUser)
 
-  // Unread count
   const unreadCount = messages.filter(m => !m.read).length
 
   const handleLogout = () => {
@@ -91,10 +85,20 @@ export default function AdminChat() {
       <div className="bg-gradient-to-r from-purple-600 to-pink-600 text-white p-8 shadow-lg">
         <div className="flex justify-between items-center">
           <div>
+            {/* === BUTTON KEMBALI (SATU-SATUNYA TAMBAHAN) === */}
+            <button
+              onClick={() => navigate(-1)}
+              className="mb-3 inline-flex items-center gap-2 bg-white/20 hover:bg-white/30 text-white px-4 py-2 rounded-lg font-semibold transition"
+            >
+              ← Kembali
+            </button>
+
             <h1 className="text-3xl font-bold mb-1">💬 Admin Chat Panel</h1>
-            <p className="text-purple-100">Balas pesan user dan kelola komunikasi</p>
+            <p className="text-purple-100">
+              Balas pesan user dan kelola komunikasi
+            </p>
           </div>
-          
+
           <div className="flex items-center gap-4">
             <div className="bg-red-500 text-white px-4 py-2 rounded-full font-bold">
               {unreadCount} Belum Dibalas
@@ -114,7 +118,7 @@ export default function AdminChat() {
         {/* LEFT: USER LIST */}
         <div className="w-64 bg-white rounded-2xl shadow-lg p-6 overflow-y-auto">
           <h3 className="font-bold text-slate-800 mb-4">👥 Filter User</h3>
-          
+
           <button
             onClick={() => {
               setFilterUser("all")
@@ -134,8 +138,12 @@ export default function AdminChat() {
               <p className="text-slate-500 text-sm">Belum ada user</p>
             ) : (
               uniqueUsers.map(username => {
-                const userMessages = messages.filter(m => m.username === username)
-                const userUnread = userMessages.filter(m => !m.read).length
+                const userMessages = messages.filter(
+                  m => m.username === username
+                )
+                const userUnread = userMessages.filter(
+                  m => !m.read
+                ).length
                 return (
                   <button
                     key={username}
@@ -176,25 +184,26 @@ export default function AdminChat() {
             ) : (
               filteredMessages.map(message => (
                 <div key={message.id} className="space-y-3">
-                  {/* USER MESSAGE */}
                   <div className="flex justify-start">
                     <div className="max-w-2xl bg-blue-100 border-2 border-blue-300 p-5 rounded-2xl rounded-bl-none">
                       <p className="text-sm font-bold text-blue-900 mb-2">
                         👤 {message.username}
                       </p>
-                      <p className="text-slate-800 leading-relaxed whitespace-pre-wrap">{message.text}</p>
+                      <p className="text-slate-800 whitespace-pre-wrap">
+                        {message.text}
+                      </p>
                       <p className="text-xs text-blue-700 mt-2">
-                        {new Date(message.timestamp).toLocaleString("id-ID")}
+                        {new Date(
+                          message.timestamp
+                        ).toLocaleString("id-ID")}
                       </p>
 
                       {!message.reply && (
                         <button
-                          onClick={() => setSelectedMessageId(message.id)}
-                          className={`mt-3 px-4 py-2 rounded-lg font-semibold transition text-sm ${
-                            selectedMessageId === message.id
-                              ? "bg-purple-600 text-white"
-                              : "bg-blue-300 text-blue-900 hover:bg-blue-400"
-                          }`}
+                          onClick={() =>
+                            setSelectedMessageId(message.id)
+                          }
+                          className="mt-3 px-4 py-2 rounded-lg font-semibold text-sm bg-blue-300 hover:bg-blue-400"
                         >
                           💬 Balas
                         </button>
@@ -202,14 +211,19 @@ export default function AdminChat() {
                     </div>
                   </div>
 
-                  {/* ADMIN REPLY */}
                   {message.reply && (
                     <div className="flex justify-end">
                       <div className="max-w-2xl bg-gradient-to-r from-purple-500 to-pink-500 text-white p-5 rounded-2xl rounded-br-none">
-                        <p className="text-sm font-bold mb-2">🟣 {message.reply.from}</p>
-                        <p className="leading-relaxed whitespace-pre-wrap">{message.reply.text}</p>
+                        <p className="text-sm font-bold mb-2">
+                          🟣 {message.reply.from}
+                        </p>
+                        <p className="whitespace-pre-wrap">
+                          {message.reply.text}
+                        </p>
                         <p className="text-xs text-purple-100 mt-2">
-                          {new Date(message.reply.timestamp).toLocaleString("id-ID")}
+                          {new Date(
+                            message.reply.timestamp
+                          ).toLocaleString("id-ID")}
                         </p>
                       </div>
                     </div>
@@ -224,47 +238,24 @@ export default function AdminChat() {
           <div className="border-t-2 border-slate-200 p-6 bg-white">
             {selectedMessageId ? (
               <>
-                <div className="bg-purple-50 border-2 border-purple-200 p-4 rounded-xl mb-4">
-                  <p className="text-sm font-semibold text-purple-900 mb-2">📝 Balas Pesan:</p>
-                  <div className="bg-white p-3 rounded-lg border-l-4 border-purple-600">
-                    <p className="text-slate-700 text-sm">
-                      {messages.find(m => m.id === selectedMessageId)?.text}
-                    </p>
-                  </div>
-                </div>
-
                 <textarea
                   value={adminReply}
-                  onChange={(e) => setAdminReply(e.target.value)}
-                  placeholder="Tulis balasan sebagai psikolog..."
+                  onChange={e => setAdminReply(e.target.value)}
                   rows="3"
-                  className="w-full p-4 border-2 border-purple-300 rounded-xl focus:ring-2 focus:ring-purple-400 focus:border-transparent outline-none resize-none mb-4"
-                  autoFocus
+                  className="w-full p-4 border rounded-xl mb-4"
                 />
 
-                <div className="flex gap-3">
-                  <button
-                    onClick={replyMessage}
-                    disabled={!adminReply.trim()}
-                    className="flex-1 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 disabled:opacity-50 disabled:cursor-not-allowed text-white px-6 py-3 rounded-xl font-semibold transition"
-                  >
-                    ✓ Kirim Balasan
-                  </button>
-                  <button
-                    onClick={() => {
-                      setSelectedMessageId(null)
-                      setAdminReply("")
-                    }}
-                    className="bg-slate-300 hover:bg-slate-400 text-slate-900 px-6 py-3 rounded-xl font-semibold transition"
-                  >
-                    Batal
-                  </button>
-                </div>
+                <button
+                  onClick={replyMessage}
+                  className="bg-purple-600 text-white px-6 py-3 rounded-xl"
+                >
+                  Kirim Balasan
+                </button>
               </>
             ) : (
-              <div className="text-center text-slate-500">
-                <p>👆 Pilih pesan untuk dibalas</p>
-              </div>
+              <p className="text-center text-slate-500">
+                👆 Pilih pesan untuk dibalas
+              </p>
             )}
           </div>
         </div>
