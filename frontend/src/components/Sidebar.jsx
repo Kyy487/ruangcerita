@@ -15,7 +15,7 @@ export default function Sidebar() {
 
       <div>
         <div className="px-6 py-6 text-xl font-bold text-blue-600 flex items-center gap-2">
-          🌿 RuangPulih
+          🌿 Ruang Cerita
         </div>
 
         <nav className="mt-6 flex flex-col gap-2 px-4">

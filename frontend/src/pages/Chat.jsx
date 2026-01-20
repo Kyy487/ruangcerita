@@ -1,4 +1,6 @@
-import { useState, useEffect, useRef } from "react"
+import { useState, useEffect, useRef, useContext } from "react"
+import { useNavigate } from "react-router-dom"
+import { AuthContext } from "../context/AuthContext"
 import Layout from "../components/Layout"
 
 // Load messages dari localStorage
@@ -19,12 +21,10 @@ function saveMessages(messages) {
 export default function Chat() {
   const [messages, setMessages] = useState([])
   const [input, setInput] = useState("")
-  const [isAdminMode, setIsAdminMode] = useState(false)
-  const [adminReply, setAdminReply] = useState("")
-  const [selectedMessageId, setSelectedMessageId] = useState(null)
   const [username, setUsername] = useState("")
   const [showUsernameForm, setShowUsernameForm] = useState(true)
   const messagesEndRef = useRef(null)
+  const { user } = useContext(AuthContext)
 
   // Load messages from localStorage on mount
   useEffect(() => {
@@ -68,49 +68,6 @@ export default function Chat() {
     setMessages(updated)
     saveMessages(updated)
     setInput("")
-  }
-
-  // Admin reply ke message
-  const replyMessage = () => {
-    if (!adminReply.trim() || !selectedMessageId) return
-
-    const updated = messages.map(msg => {
-      if (msg.id === selectedMessageId) {
-        return {
-          ...msg,
-          reply: {
-            text: adminReply,
-            timestamp: new Date().toISOString(),
-            from: "Dr. Psikolog (Admin)"
-          },
-          read: true
-        }
-      }
-      return msg
-    })
-
-    setMessages(updated)
-    saveMessages(updated)
-    setAdminReply("")
-    setSelectedMessageId(null)
-  }
-
-  // Delete message
-  const deleteMessage = (id) => {
-    if (window.confirm("Hapus pesan ini?")) {
-      const updated = messages.filter(msg => msg.id !== id)
-      setMessages(updated)
-      saveMessages(updated)
-    }
-  }
-
-  // Clear all messages
-  const clearAllMessages = () => {
-    if (window.confirm("Hapus SEMUA pesan? Tindakan ini tidak bisa dibatalkan!")) {
-      setMessages([])
-      saveMessages([])
-      setSelectedMessageId(null)
-    }
   }
 
   const handleKeyPress = (e) => {
@@ -168,37 +125,18 @@ export default function Chat() {
         <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white p-8 shadow-lg">
           <div className="flex justify-between items-start">
             <div>
-              <h1 className="text-3xl font-bold mb-2">
-                {isAdminMode ? "🔑 Panel Admin - Kelola Chat" : "💬 Curhat & Konsultasi"}
-              </h1>
+              <h1 className="text-3xl font-bold mb-2">💬 Curhat & Konsultasi</h1>
               <p className="text-blue-100">
-                {isAdminMode 
-                  ? "Balas pesan pengguna sebagai Psikolog"
-                  : `Halo ${username}! Berbicara dengan Psikolog (Admin) - Aman & Terpercaya`
-                }
+                {`Halo ${username}! Berbicara dengan Psikolog (Admin) - Aman & Terpercaya`}
               </p>
             </div>
             
             <div className="flex gap-3">
-              {unreadCount > 0 && !isAdminMode && (
+              {unreadCount > 0 && (
                 <div className="bg-red-500 text-white px-4 py-2 rounded-full font-bold">
                   {unreadCount} Balasan Baru
                 </div>
               )}
-              
-              <button
-                onClick={() => {
-                  setIsAdminMode(!isAdminMode)
-                  setSelectedMessageId(null)
-                }}
-                className={`px-6 py-3 rounded-lg font-semibold transition ${
-                  isAdminMode
-                    ? "bg-red-500 hover:bg-red-600 text-white"
-                    : "bg-blue-500 hover:bg-blue-600 text-white"
-                }`}
-              >
-                {isAdminMode ? "🔓 Keluar Admin" : "🔐 Admin Panel"}
-              </button>
             </div>
           </div>
         </div>
@@ -224,44 +162,12 @@ export default function Chat() {
             messages.map((message) => (
               <div key={message.id} className="space-y-3">
                 {/* USER MESSAGE */}
-                <div className={`flex ${isAdminMode ? "justify-start" : "justify-end"}`}>
-                  <div
-                    className={`max-w-2xl p-5 rounded-2xl ${
-                      isAdminMode
-                        ? "bg-blue-100 border-2 border-blue-300"
-                        : "bg-blue-600 text-white"
-                    }`}
-                  >
-                    {isAdminMode && (
-                      <p className="text-sm font-bold mb-2 text-blue-900">
-                        👤 {message.username}
-                      </p>
-                    )}
+                <div className="flex justify-end">
+                  <div className="max-w-2xl p-5 rounded-2xl bg-blue-600 text-white rounded-br-none">
                     <p className="leading-relaxed whitespace-pre-wrap">{message.text}</p>
-                    <p className={`text-xs mt-2 ${isAdminMode ? "text-blue-700" : "text-blue-100"}`}>
+                    <p className="text-xs mt-2 text-blue-100">
                       {new Date(message.timestamp).toLocaleString("id-ID")}
                     </p>
-
-                    {isAdminMode && (
-                      <div className="flex gap-2 mt-3">
-                        <button
-                          onClick={() => setSelectedMessageId(message.id)}
-                          className={`px-4 py-2 rounded-lg font-semibold transition text-sm ${
-                            selectedMessageId === message.id
-                              ? "bg-purple-600 text-white"
-                              : "bg-blue-300 text-blue-900 hover:bg-blue-400"
-                          }`}
-                        >
-                          💬 Balas
-                        </button>
-                        <button
-                          onClick={() => deleteMessage(message.id)}
-                          className="px-4 py-2 bg-red-300 hover:bg-red-400 text-red-900 rounded-lg font-semibold transition text-sm"
-                        >
-                          🗑️ Hapus
-                        </button>
-                      </div>
-                    )}
                   </div>
                 </div>
 
@@ -279,7 +185,7 @@ export default function Chat() {
                 )}
 
                 {/* NO REPLY YET */}
-                {!message.reply && !isAdminMode && (
+                {!message.reply && (
                   <div className="flex justify-center">
                     <p className="text-sm text-slate-500 italic">⏳ Menunggu balasan psikolog...</p>
                   </div>
@@ -294,100 +200,41 @@ export default function Chat() {
         {/* INPUT AREA */}
         <div className="p-8 bg-white border-t-2 border-slate-200">
           <div className="max-w-4xl mx-auto space-y-4">
-            {isAdminMode ? (
-              // ADMIN REPLY FORM
-              <>
-                {selectedMessageId ? (
-                  <>
-                    <div className="bg-purple-50 border-2 border-purple-200 p-4 rounded-xl">
-                      <p className="text-sm font-semibold text-purple-900 mb-2">📝 Balas Pesan:</p>
-                      <div className="bg-white p-3 rounded-lg border-l-4 border-purple-600">
-                        <p className="text-slate-700 text-sm">
-                          {messages.find(m => m.id === selectedMessageId)?.text}
-                        </p>
-                      </div>
-                    </div>
-
-                    <textarea
-                      value={adminReply}
-                      onChange={(e) => setAdminReply(e.target.value)}
-                      onKeyPress={handleKeyPress}
-                      placeholder="Tulis balasan profesional sebagai psikolog..."
-                      rows="4"
-                      className="w-full p-4 border-2 border-purple-300 rounded-xl focus:ring-2 focus:ring-purple-400 focus:border-transparent outline-none resize-none"
-                      autoFocus
-                    />
-
-                    <div className="flex gap-3">
-                      <button
-                        onClick={replyMessage}
-                        disabled={!adminReply.trim()}
-                        className="flex-1 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 disabled:opacity-50 disabled:cursor-not-allowed text-white px-8 py-4 rounded-xl font-semibold transition shadow-lg"
-                      >
-                        ✓ Kirim Balasan
-                      </button>
-                      <button
-                        onClick={() => {
-                          setSelectedMessageId(null)
-                          setAdminReply("")
-                        }}
-                        className="bg-slate-300 hover:bg-slate-400 text-slate-900 px-8 py-4 rounded-xl font-semibold transition"
-                      >
-                        Batal
-                      </button>
-                    </div>
-                  </>
-                ) : (
-                  <div className="bg-slate-100 border-2 border-slate-300 p-6 rounded-xl text-center">
-                    <p className="text-slate-600">👆 Pilih pesan untuk dibalas</p>
-                  </div>
-                )}
-
-                <div className="flex gap-3 pt-4 border-t-2 border-slate-200">
-                  <button
-                    onClick={clearAllMessages}
-                    className="flex-1 bg-red-500 hover:bg-red-600 text-white px-6 py-3 rounded-xl font-semibold transition"
-                  >
-                    🗑️ Hapus Semua Pesan
-                  </button>
-                </div>
-              </>
-            ) : (
-              // USER MESSAGE FORM
-              <>
-                <div className="bg-blue-50 border-2 border-blue-200 p-4 rounded-xl flex items-center gap-3">
-                  <span className="text-2xl">💡</span>
-                  <p className="text-sm text-blue-900">
-                    <strong>Tips:</strong> Bagikan perasaan Anda dengan detail. Semakin detail, semakin baik kami memahami dan membantu Anda. Psikolog kami akan membaca dan membalas secepatnya. 💚
-                  </p>
-                </div>
-
-                <div className="flex gap-3">
-                  <textarea
-                    value={input}
-                    onChange={(e) => setInput(e.target.value)}
-                    onKeyPress={handleKeyPress}
-                    placeholder="Bagikan cerita, perasaan, atau keluh kesah Anda di sini..."
-                    rows="3"
-                    className="flex-1 p-4 border-2 border-blue-300 rounded-xl focus:ring-2 focus:ring-blue-400 focus:border-transparent outline-none resize-none"
-                  />
-                  <button
-                    onClick={sendMessage}
-                    disabled={!input.trim()}
-                    className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 disabled:opacity-50 disabled:cursor-not-allowed text-white px-8 py-4 rounded-xl font-semibold transition self-end shadow-lg"
-                  >
-                    ➤ Kirim
-                  </button>
-                </div>
-
-                <p className="text-sm text-slate-500 text-center">
-                  Nama: <strong>{username}</strong> | <button onClick={() => {
-                    localStorage.removeItem("user_chat_name")
-                    setShowUsernameForm(true)
-                  }} className="text-blue-600 hover:underline">Ganti Nama</button>
+            {/* USER MESSAGE FORM */}
+            <>
+              <div className="bg-blue-50 border-2 border-blue-200 p-4 rounded-xl flex items-center gap-3">
+                <span className="text-2xl">💡</span>
+                <p className="text-sm text-blue-900">
+                  <strong>Tips:</strong> Bagikan perasaan Anda dengan detail. Semakin detail, semakin baik kami memahami dan membantu Anda. Psikolog kami akan membaca dan membalas secepatnya. 💚
                 </p>
-              </>
-            )}
+              </div>
+
+              <div className="flex gap-3">
+                <textarea
+                  value={input}
+                  onChange={(e) => setInput(e.target.value)}
+                  onKeyPress={handleKeyPress}
+                  placeholder="Bagikan cerita, perasaan, atau keluh kesah Anda di sini..."
+                  rows="3"
+                  className="flex-1 p-4 border-2 border-blue-300 rounded-xl focus:ring-2 focus:ring-blue-400 focus:border-transparent outline-none resize-none"
+                />
+                <button
+                  onClick={sendMessage}
+                  disabled={!input.trim()}
+                  className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 disabled:opacity-50 disabled:cursor-not-allowed text-white px-8 py-4 rounded-xl font-semibold transition self-end shadow-lg"
+                >
+                  ➤ Kirim
+                </button>
+              </div>
+
+              <p className="text-sm text-slate-500 text-center">
+                Nama: <strong>{username}</strong> | <button onClick={() => {
+                  localStorage.removeItem("user_chat_name")
+                  setShowUsernameForm(true)
+                }} className="text-blue-600 hover:underline">Ganti Nama</button>
+              </p>
+            </>
+            }
           </div>
         </div>
       </div>

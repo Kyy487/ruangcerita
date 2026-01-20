@@ -2,7 +2,7 @@ import { useState, useContext } from "react"
 import { useNavigate } from "react-router-dom"
 import { AuthContext } from "../context/AuthContext"
 
-// Demo users
+// Demo users - dalam production gunakan backend
 const DEMO_USERS = {
   user: {
     email: "user@example.com",
@@ -22,7 +22,7 @@ export default function Login() {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [error, setError] = useState("")
-  const [role, setRole] = useState("user")
+  const [role, setRole] = useState("user") // user atau admin
   const { login } = useContext(AuthContext)
   const navigate = useNavigate()
 
@@ -35,9 +35,11 @@ export default function Login() {
       return
     }
 
+    // Validasi login
     const demoUser = DEMO_USERS[role]
     
     if (email === demoUser.email && password === demoUser.password) {
+      // Login berhasil
       const userData = {
         id: Date.now(),
         email: demoUser.email,
